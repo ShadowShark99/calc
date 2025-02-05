@@ -18,13 +18,23 @@
       flex-direction: column;
       align-items: center;
     }
+    #display{
+      width: 400px;
+      height: 100px;
+      font-size: 24px;
+      text-align: right;
+      font-size: 40px;
+      border: 1px solid black;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
     </style>
 </head>
 <body>
   <div class="calc">
-    <div>
-      <input type="text" id="display" value="0">
-    </div>
+    <div id="display"></div>
     <div class="row">
       <button class="num">1</button>
       <button class="num">2</button>
@@ -72,7 +82,7 @@
       } else if(op === '/'){
         return (b === 0) ? 'Zero friends and Zero cookies' : Math.round(100*num1 / num2)/100;
       } else {
-        return 'Clear';
+        return 0;
       }
     }
 
@@ -87,7 +97,7 @@
         opPressed = false;
       }
       input += num;
-      document.getElementById('display').value = input;
+      document.getElementById('display').textContent = input;
     }
 
     const numButtons = document.querySelectorAll('.num');
@@ -113,7 +123,7 @@
     function inputEq(){
       b = parseInt(input);
       input = operate(a, b, opCurr);
-      document.getElementById('display').value = input;
+      document.getElementById('display').textContent = input;
     }
 
     const opButtons = document.querySelectorAll('.op');
@@ -126,7 +136,18 @@
           if(!eqPressed)
             inputEq();
           eqPressed = true;
-        } else {
+        } else if (button.textContent === 'Clear'){
+          input = "";
+          a = 0;
+          b = 0;
+          opCurr = "";
+          opPressed = true;
+          eqPressed = true;
+          document.getElementById('display').textContent = input;
+
+        }
+        else
+        {
           inputOp(button.textContent);
         }
       });
