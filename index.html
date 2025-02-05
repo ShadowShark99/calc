@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .row {
+      display: flex;
+    }
+    button {
+      width: 100px;
+      height: 100px;
+      font-size: 24px;
+    }
+    .calc{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    </style>
+</head>
+<body>
+  <div class="calc">
+    <div>
+      <input type="text" id="display" value="0">
+    </div>
+    <div class="row">
+      <button class="num">1</button>
+      <button class="num">2</button>
+      <button class="num">3</button>
+      <button class="op">Clear</button>
+    </div>
+    <div class="row">
+      <button class="num">4</button>
+      <button class="num">5</button>
+      <button class="num">6</button>
+      <button class="op">*</button>
+    </div>
+    <div class="row">
+      <button class="num">7</button>
+      <button class="num">8</button>
+      <button class="num">9</button>
+      <button class="op">/</button>
+    </div>
+    <div class="row">
+      <button class="op">+</button>
+      <button class="num">0</button>
+      <button class="op">-</button>
+      <button class="op" id="eq">=</button>
+      
+    </div>
+    
+
+  </div>
+  
+  <script>
+    let input = "";
+    let a = 0;
+    let b = 0;
+    let opCurr = "";
+    let opPressed = true; //when to clear the calculator display
+    let eqPressed = false;
+    let oneInput = false;
+    function operate(num1, num2, op){
+      if(op === '+'){
+        return num1 + num2;
+      } else if(op === '-'){
+        return num1 - num2;
+      } else if(op === '*'){
+        return num1 * num2;
+      } else if(op === '/'){
+        return (b === 0) ? 'Zero friends and Zero cookies' : Math.round(100*num1 / num2)/100;
+      } else {
+        return 'Clear';
+      }
+    }
+
+    function inputNum(num){
+      if(eqPressed){
+        input = "";
+        eqPressed = false;
+        oneInput = false;
+      }
+      if(opPressed){
+        input = "";
+        opPressed = false;
+      }
+      input += num;
+      document.getElementById('display').value = input;
+    }
+
+    const numButtons = document.querySelectorAll('.num');
+    numButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        console.log(button.textContent);
+        inputNum(button.textContent);
+      });
+    });
+
+    function inputOp(op){
+      if(oneInput){
+        inputEq();
+      }
+      a = parseInt(input);
+      //input = op;
+      opCurr = op;
+      //document.getElementById('display').value = input;
+      opPressed = true;
+      oneInput = true;
+    }
+
+    function inputEq(){
+      b = parseInt(input);
+      input = operate(a, b, opCurr);
+      document.getElementById('display').value = input;
+    }
+
+    const opButtons = document.querySelectorAll('.op');
+    opButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        console.log(button.textContent);
+        if(button.id === 'eq'){
+          
+          console.log('eq');
+          if(!eqPressed)
+            inputEq();
+          eqPressed = true;
+        } else {
+          inputOp(button.textContent);
+        }
+      });
+    });
+
+  </script>
+</body>
+</html>
