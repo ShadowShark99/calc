@@ -112,7 +112,7 @@
       if(oneInput){
         inputEq();
       }
-      a = parseInt(input);
+      a = parseFloat(input);
       //input = op;
       opCurr = op;
       //document.getElementById('display').value = input;
@@ -121,7 +121,7 @@
     }
 
     function inputEq(){
-      b = parseInt(input);
+      b = parseFloat(input);
       input = operate(a, b, opCurr);
       document.getElementById('display').textContent = input;
     }
